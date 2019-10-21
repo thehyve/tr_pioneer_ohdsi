@@ -1,0 +1,58 @@
+#cloud-config
+# You should change fqdn and certname to your one
+fqdn: pioneer.thehyve.net
+write_files:
+- path: /etc/puppetlabs/puppet/puppet.conf
+  permissions: '0644'
+  owner: root:root
+  content: |
+    [agent]
+    server = master.thehyve.net
+    certname = pioneer.thehyve.net
+    environment = production
+- path: /etc/puppetlabs/puppet/ssl/certs/ca.pem
+  permissions: '0644'
+  owner: root:root
+  content: |
+    -----BEGIN CERTIFICATE-----
+    MIIFhDCCA2ygAwIBAgIBATANBgkqhkiG9w0BAQsFADAoMSYwJAYDVQQDDB1QdXBw
+    ZXQgQ0E6IG1hc3Rlci50aGVoeXZlLm5ldDAeFw0xNzEyMjYxMjIxMTZaFw0yMjEy
+    MjYxMjIxMTZaMCgxJjAkBgNVBAMMHVB1cHBldCBDQTogbWFzdGVyLnRoZWh5dmUu
+    bmV0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwuKBchFCXrogTHsm
+    vb6engIU841oCu95cgHGkgxJe1LmLLU+vyCkUzc+y3XfNW0TbdrbgyrV/8IdxZTx
+    t1OURACWP1U2SyyTwe48NestHVHgBKbsmQICZMD3dXlWku6R/XBkvnBo8/jBqM1p
+    Va0H3rehhopZb3pruw664shO9GEbgUbGZTXm3WRYfRWFTy96hRIN1IcWADsVbFKa
+    ISSvoe508C1jKutpTgrOaNn0yh5PF1WiuloTb4Qzh9o8ZtTnu/ctEITKz/RZUV2e
+    Q1aMBNCspgNyle0e5mGXkfQthqnxoHagxAOhZuwiNif3yiChUCjMNYja5daao5Cw
+    gAVEjpo9SVlArSNJzeSH3CZA1vQgxZAkTwR4e1Y6dODiWRA+askt9EuVjw6bs+58
+    zJVUtbmfXGsci16C0SDmYbnBF6cx48jTKISntmsm+yUPsqgJu8JQSlHJMlKHUOjz
+    sOEWTfUDTZ92cRogJRnPD2md6k3ryg3wTV+8xvKyoKrFBcB60Vjz7crnpUaznbdB
+    zBq9QH0mbrdFWZGw2ploGekoj1Iush/uc1zQvC3k4Q3HPfhsubqqX+ydk0pW6hXX
+    EXZjtPHVcVH8LwXIO5jLlN8OwwB/KA/otovlp6QLzRft2m3/EReI0EfVpP38DxMg
+    Q7YDetiriUIMJNZS33IqEz8H9qUCAwEAAaOBuDCBtTA3BglghkgBhvhCAQ0EKgwo
+    UHVwcGV0IFJ1YnkvT3BlblNTTCBJbnRlcm5hbCBDZXJ0aWZpY2F0ZTAOBgNVHQ8B
+    Af8EBAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUbSTZG0AsLjAQG+Ui
+    vFfRMWRpsv4wOgYDVR0jBDMwMaEspCowKDEmMCQGA1UEAwwdUHVwcGV0IENBOiBt
+    YXN0ZXIudGhlaHl2ZS5uZXSCAQEwDQYJKoZIhvcNAQELBQADggIBALHQ6l0Sam8P
+    hi1e3jZga+INZ57+R64iug2TTKH8j9i73gnWvIYTFy5AqcDIsWPYqm/Ksq3Cq+mv
+    6RRW/JH3rfFHe4Hvr4HSNQBrIpKIKb5mpVALrhjLN+1wZJL1AY86ACCfZ+d0HrJv
+    CVm39WQicAu6BUgoXpKxANdrZFOnm7DkVnyL2vx2ZHdShTfESHbJns46wTmFx9xM
+    PiA/XNkAcfLY3alq3TeDsnKLGtEtSUITSCxETyxmPpiH1WgGsuyLkQUBzb9TkYPK
+    h4NOpU4KYWo9SJ6H+IjVoeIQsjHY8rAWVQt0thF/s0u7J2/WfpGPQnbpXxhO1IhN
+    ce9Y9xgWSAuKrz98Wxwf6bVdQLok47lCe+MaK8bPJXkX1ZW2ofjgEBXaCJQ/1ceP
+    f1BJ1w8VKPe9wuah4nX6lfVfiput3b5VGafe84yHTQ8bLK9MpLoibAWcC4FCRpKv
+    iSyflOOrotsSDl/fQwRyrRHsMWQwDK4KlxY7sXupDVLelToCVSikurih0C/u8zlf
+    vwrGc4IDB0yjkXqWfsOIgma+AM6sd0r6Rx9I6jnWOiQDXAhxH4OxkyD6sKhATLjD
+    BGUnBO6n5rzgq/zA03lgearems8z+O5mfVSNKUuCeLwC3RZAsD8nd8FE4REv8HX4
+    nqAeIZ8na505QmlIy9yHy0OZe/vpPs6A
+    -----END CERTIFICATE-----
+apt:
+  sources:
+    puppetlabs.list:
+      source: "deb https://apt.puppetlabs.com/ xenial puppet5"
+      keyid: "6F6B15509CF8E59E6E469F327F438280EF8D349F"
+      keyserver: "pgp.mit.edu"
+package_update: true
+package_upgrade: true
+packages:
+- puppet-agent
